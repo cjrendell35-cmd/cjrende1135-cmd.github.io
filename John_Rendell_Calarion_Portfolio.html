@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Rendell Calarion — Virtual Assistant &amp; Administrative Support Professional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F7FA;
+    --bg-alt:#EDF0F5;
+    --card:#FFFFFF;
+    --ink:#0F1420;
+    --ink-soft:#525C70;
+    --ink-faint:#8A93A6;
+    --line:#DFE3EA;
+    --accent:#FF5A2E;
+    --accent-ink:#B23F1F;
+    --verify:#1D9C7C;
+    --nav-h:72px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; margin:0; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  /* ---------- NAV ---------- */
+  nav.topnav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--nav-h);
+    display:flex; align-items:center;
+    background:rgba(246,247,250,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:0 28px;
+    width:100%; display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .logo .dot{width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block;}
+  .nav-links{display:flex; gap:32px; list-style:none; margin:0; padding:0;}
+  .nav-links a{
+    font-size:14px; font-weight:500; text-decoration:none; color:var(--ink-soft);
+    position:relative; padding:4px 0;
+    transition:color 0.2s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:2px; background:var(--accent);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    font-size:13px; font-weight:600; padding:9px 16px; border-radius:8px;
+    background:var(--ink); color:#fff; text-decoration:none;
+    transition:transform 0.2s ease, background 0.2s ease;
+  }
+  .nav-cta:hover{background:var(--accent-ink); transform:translateY(-1px);}
+  .nav-toggle{display:none;}
+
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block; background:none; border:none; font-size:22px; color:var(--ink); cursor:pointer;}
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease;}
+  .reveal-stagger.in-view > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in-view > *:nth-child(1){transition-delay:0.05s;}
+  .reveal-stagger.in-view > *:nth-child(2){transition-delay:0.12s;}
+  .reveal-stagger.in-view > *:nth-child(3){transition-delay:0.19s;}
+  .reveal-stagger.in-view > *:nth-child(4){transition-delay:0.26s;}
+  .reveal-stagger.in-view > *:nth-child(5){transition-delay:0.33s;}
+  .reveal-stagger.in-view > *:nth-child(6){transition-delay:0.40s;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:calc(var(--nav-h) + 84px) 0 80px;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
+  }
+  @media (max-width:860px){ header.hero{grid-template-columns:1fr; padding-top:calc(var(--nav-h) + 56px);} }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.08em;
+    text-transform:uppercase; color:var(--verify);
+    background:rgba(29,156,124,0.09); padding:6px 12px; border-radius:100px;
+    margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--verify);}
+
+  h1.headline{
+    font-size:clamp(2.4rem, 5vw, 3.6rem);
+    font-weight:700;
+    line-height:1.06;
+  }
+  h1.headline .accent{color:var(--accent);}
+  .sub{
+    margin-top:20px; font-size:1.1rem; color:var(--ink-soft); max-width:52ch;
+  }
+  .hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:14.5px; font-weight:600; text-decoration:none;
+    padding:13px 22px; border-radius:10px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .btn-primary{background:var(--accent); color:#fff; box-shadow:0 6px 18px rgba(255,90,46,0.28);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(255,90,46,0.36);}
+  .btn-secondary{background:transparent; color:var(--ink); border:1.5px solid var(--line);}
+  .btn-secondary:hover{border-color:var(--ink); transform:translateY(-2px);}
+
+  .hero-meta{display:flex; gap:20px; margin-top:36px; flex-wrap:wrap;}
+  .hero-meta div{font-size:13px; color:var(--ink-faint);}
+  .hero-meta strong{display:block; color:var(--ink); font-family:'JetBrains Mono', monospace; font-size:15px;}
+
+  /* accuracy ring */
+  .ring-card{
+    background:var(--card); border:1px solid var(--line); border-radius:20px;
+    padding:32px; display:flex; flex-direction:column; align-items:center; gap:14px;
+    box-shadow:0 20px 40px -24px rgba(15,20,32,0.25);
+  }
+  .ring-wrap{position:relative; width:180px; height:180px;}
+  .ring-wrap svg{transform:rotate(-90deg); width:100%; height:100%;}
+  .ring-bg{fill:none; stroke:var(--bg-alt); stroke-width:12;}
+  .ring-fg{
+    fill:none; stroke:var(--accent); stroke-width:12; stroke-linecap:round;
+    stroke-dasharray:502.4; stroke-dashoffset:502.4;
+    transition:stroke-dashoffset 1.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .ring-wrap.in-view .ring-fg{stroke-dashoffset:calc(502.4 - (502.4 * 0.995));}
+  .ring-label{
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .ring-label .num{font-family:'JetBrains Mono', monospace; font-size:1.9rem; font-weight:600;}
+  .ring-label .txt{font-size:11px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;}
+  .ring-caption{font-size:13px; color:var(--ink-soft); text-align:center;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:88px 0;}
+  .section-head{margin-bottom:44px; max-width:60ch;}
+  .kicker{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:10px; display:block;
+  }
+  h2.section-title{font-size:2rem; font-weight:700;}
+  .section-desc{color:var(--ink-soft); margin-top:12px;}
+
+  section:nth-of-type(even){background:var(--bg-alt);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px;}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{font-size:1.05rem; color:var(--ink-soft);}
+  .stat-list{display:flex; flex-direction:column; gap:0;}
+  .stat-list li{
+    list-style:none; display:flex; justify-content:space-between; align-items:baseline;
+    padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .stat-list li span:first-child{color:var(--ink-soft); font-size:14px;}
+  .stat-list li span:last-child{font-family:'JetBrains Mono', monospace; font-weight:600; font-size:15px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{position:relative; padding-left:32px; border-left:2px solid var(--line);}
+  .tl-item{position:relative; padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{
+    position:absolute; left:-38px; top:4px; width:14px; height:14px; border-radius:50%;
+    background:var(--card); border:3px solid var(--accent);
+  }
+  .tl-date{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-faint); margin-bottom:6px;}
+  .tl-item h3{font-size:1.2rem; margin-bottom:2px;}
+  .tl-org{font-size:13.5px; color:var(--verify); font-weight:600; display:block; margin-bottom:10px;}
+  .tl-item p{color:var(--ink-soft); font-size:14.5px; max-width:66ch;}
+  .tl-tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+  .tl-tags span{
+    font-family:'JetBrains Mono', monospace; font-size:11px; padding:4px 10px;
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:100px; color:var(--ink-soft);
+  }
+  section:nth-of-type(even) .tl-tags span{background:var(--card);}
+
+  /* ---------- WORK SAMPLES ---------- */
+  .project-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:24px;}
+  @media (max-width:760px){ .project-grid{grid-template-columns:1fr;} }
+  .project-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px;
+    transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .project-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 36px -20px rgba(15,20,32,0.28);
+    border-color:transparent;
+  }
+  .project-num{font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--accent); margin-bottom:14px; display:block;}
+  .project-card h3{font-size:1.15rem; margin-bottom:10px;}
+  .project-card p{color:var(--ink-soft); font-size:14.5px; margin-bottom:16px;}
+  .project-meta{display:flex; flex-wrap:wrap; gap:8px;}
+  .project-meta span{
+    font-size:11px; font-family:'JetBrains Mono', monospace; padding:4px 10px; border-radius:100px;
+    background:var(--bg-alt); color:var(--ink-soft);
+  }
+  .project-outcome{
+    margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);
+    font-size:13.5px; color:var(--verify); font-weight:600; display:flex; align-items:center; gap:8px;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills-cols{display:grid; grid-template-columns:repeat(3, 1fr); gap:28px;}
+  @media (max-width:760px){ .skills-cols{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .skills-cols{grid-template-columns:1fr;} }
+  .skill-block h4{
+    font-family:'JetBrains Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--accent); margin-bottom:14px;
+  }
+  .tag-cloud{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag-cloud span{
+    font-size:13px; padding:7px 12px; border-radius:8px; background:var(--card);
+    border:1px solid var(--line); color:var(--ink); transition:border-color 0.2s ease, transform 0.2s ease;
+  }
+  .tag-cloud span:hover{border-color:var(--accent); transform:translateY(-2px);}
+  section:nth-of-type(even) .tag-cloud span{background:var(--bg);}
+
+  /* ---------- EDUCATION / CONTACT ---------- */
+  .edu-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px 32px;
+    display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .edu-card h3{font-size:1.15rem;}
+  .edu-card span{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--ink-faint);}
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px; padding:28px 32px;
+    display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .cert-card:hover{transform:translateY(-3px); box-shadow:0 18px 32px -20px rgba(15,20,32,0.25);}
+  .cert-main{display:flex; align-items:center; gap:18px;}
+  .cert-icon{
+    width:46px; height:46px; border-radius:12px; background:rgba(29,156,124,0.12);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .cert-icon svg{width:22px; height:22px;}
+  .cert-card h3{font-size:1.1rem; margin-bottom:4px;}
+  .cert-issuer{font-size:13px; color:var(--ink-faint);}
+  .cert-right{display:flex; align-items:center; gap:16px; flex-wrap:wrap;}
+  .cert-dates{text-align:right; font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--ink-faint); line-height:1.6;}
+  .cert-status{
+    font-family:'JetBrains Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    padding:5px 11px; border-radius:100px; background:rgba(29,156,124,0.12); color:var(--verify); font-weight:600;
+  }
+  .cert-view{
+    font-size:13px; font-weight:600; text-decoration:none; color:var(--ink);
+    border:1.5px solid var(--line); padding:9px 16px; border-radius:8px;
+    transition:border-color 0.2s ease, transform 0.2s ease;
+    white-space:nowrap;
+  }
+  .cert-view:hover{border-color:var(--accent); transform:translateY(-2px);}
+
+  footer{
+    padding:90px 0 60px; text-align:center;
+    background:var(--ink); color:#fff;
+  }
+  footer h2{font-size:2.2rem; margin-bottom:16px;}
+  footer p{color:#B9BFCC; max-width:44ch; margin:0 auto 32px;}
+  footer .hero-actions{justify-content:center;}
+  footer .btn-secondary{color:#fff; border-color:#38405a;}
+  footer .btn-secondary:hover{border-color:#fff;}
+  .footer-contact{margin-top:44px; display:flex; justify-content:center; gap:28px; flex-wrap:wrap;}
+  .footer-contact a{color:#B9BFCC; text-decoration:none; font-size:13.5px; font-family:'JetBrains Mono', monospace;}
+  .footer-contact a:hover{color:#fff;}
+  .footer-bottom{margin-top:40px; font-size:12px; color:#5A6379;}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="nav-inner">
+    <div class="logo"><span class="dot"></span>John Rendell Calarion</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#work">Work Samples</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="John_Rendell_Calarion_Resume.pdf" download>Résumé ↓</a>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div>
+    <span class="eyebrow"><span class="dot"></span>Open to remote &amp; contract roles</span>
+    <h1 class="headline">Administrative precision, <span class="accent">delivered remotely.</span></h1>
+    <p class="sub">Virtual Assistant and Administrative Support Professional with 10+ years across insurance, mortgage, and data operations — trusted with high-volume, confidential work and strict SLAs.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="John_Rendell_Calarion_Resume.pdf" download>Download Résumé</a>
+      <a class="btn btn-secondary" href="#contact">Get in touch</a>
+    </div>
+    <div class="hero-meta">
+      <div><strong>Bacoor, Cavite, PH</strong>Based in</div>
+      <div><strong>10+ yrs</strong>Experience</div>
+      <div><strong>Remote-first</strong>Work style</div>
+    </div>
+  </div>
+  <div class="ring-card reveal">
+    <div class="ring-wrap" id="ringWrap">
+      <svg viewBox="0 0 180 180">
+        <circle class="ring-bg" cx="90" cy="90" r="80"></circle>
+        <circle class="ring-fg" cx="90" cy="90" r="80"></circle>
+      </svg>
+      <div class="ring-label">
+        <span class="num">99.5%</span>
+        <span class="txt">Accuracy</span>
+      </div>
+    </div>
+    <p class="ring-caption">Minimum accuracy rate sustained across mortgage document processing while meeting daily production targets.</p>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <span class="kicker">About</span>
+      <h2 class="section-title">Detail-oriented, and built for high-volume work</h2>
+      <p>I've spent over a decade inside insurance, mortgage, and data processing operations — managing high-volume administrative tasks, maintaining accurate records, and processing confidential information under strict service level agreements.</p>
+      <p>I work well with international clients in remote, fast-paced environments, and I've been recognized repeatedly as a Top Performer for quality output and for helping teammates ramp up faster through coaching and process documentation.</p>
+    </div>
+    <ul class="stat-list reveal">
+      <li><span>Industries</span><span>Insurance · Mortgage · Data Ops</span></li>
+      <li><span>Compliance</span><span>HIPAA</span></li>
+      <li><span>Recognitions</span><span>Top Agent of the Year</span></li>
+      <li><span>Education</span><span>BS Information Technology</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Experience</span>
+      <h2 class="section-title">Where the work happened</h2>
+      <p class="section-desc">Three roles, one throughline: high volume, high confidentiality, high accuracy.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="tl-date">DEC 2025 — PRESENT</div>
+        <h3>Video Annotation Reviewer</h3>
+        <span class="tl-org">Atlas Capture · Part-Time</span>
+        <p>Review and validate segment-level annotations for first-person video datasets — checking that labels match observed actions, verifying timestamps, and correcting missing or incorrect labels to maintain dataset quality for machine learning.</p>
+        <div class="tl-tags"><span>QA</span><span>Data Labeling</span><span>ML Datasets</span></div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="tl-date">APR 2021 — MAY 2026</div>
+        <h3>Senior Service Administrator, Insurance Operations</h3>
+        <span class="tl-org">EXL Service Philippines</span>
+        <p>Processed high-volume policy updates and cancellations against strict quality and turnaround standards, generated policy summaries, and maintained records across internal databases. Took part in a confidential HIPAA-compliant redaction project and trained new team members on queues and procedures.</p>
+        <div class="tl-tags"><span>Insurance Ops</span><span>HIPAA Redaction</span><span>Training</span><span>CRM</span></div>
+      </div>
+      <div class="tl-item">
+        <span class="tl-dot"></span>
+        <div class="tl-date">JUN 2014 — NOV 2020</div>
+        <h3>Imaging Associate, Mortgage Document Specialist</h3>
+        <span class="tl-org">Ocwen Business Solutions Inc.</span>
+        <p>Reviewed mortgage documents and verified borrower information via RealServicing and MSP, validated loan numbers, and held a minimum 99.50% accuracy rate against daily production targets. Served as team Point of Contact for operational support.</p>
+        <div class="tl-tags"><span>Mortgage Docs</span><span>RealServicing</span><span>MSP</span><span>QA Reporting</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Work Samples</span>
+      <h2 class="section-title">Selected work, in practice</h2>
+      <p class="section-desc">A closer look at the kind of projects behind the résumé bullets.</p>
+    </div>
+
+    <div class="project-grid reveal-stagger">
+      <div class="project-card">
+        <span class="project-num">01</span>
+        <h3>HIPAA-Compliant Redaction Project</h3>
+        <p>Redacted sensitive customer information from large volumes of PDF policy documents as part of a confidential, compliance-driven initiative at EXL Service.</p>
+        <div class="project-meta"><span>Adobe Acrobat</span><span>HIPAA</span><span>PDF Batch Processing</span></div>
+        <div class="project-outcome">✓ Delivered under strict confidentiality standards</div>
+      </div>
+      <div class="project-card">
+        <span class="project-num">02</span>
+        <h3>Policy Update &amp; Cancellation Workflow</h3>
+        <p>Owned end-to-end processing of policy changes — name, address, DOB, beneficiary updates — plus cancellations, balancing volume against strict SLA turnaround.</p>
+        <div class="project-meta"><span>CRM</span><span>Salesforce</span><span>SLA Management</span></div>
+        <div class="project-outcome">✓ Awarded Top Agent of the Year</div>
+      </div>
+      <div class="project-card">
+        <span class="project-num">03</span>
+        <h3>Mortgage Document QA System</h3>
+        <p>Reviewed and classified mortgage documents, validated loan numbers, and produced daily production and QA reports while holding accuracy above 99.50%.</p>
+        <div class="project-meta"><span>RealServicing</span><span>MSP</span><span>Reporting</span></div>
+        <div class="project-outcome">✓ Sustained 99.50% accuracy rate</div>
+      </div>
+      <div class="project-card">
+        <span class="project-num">04</span>
+        <h3>New Hire Onboarding &amp; Coaching</h3>
+        <p>Trained and supported incoming team members on work queues, quality standards, and operational procedures, shortening ramp-up time for new hires.</p>
+        <div class="project-meta"><span>Training</span><span>Knowledge Sharing</span><span>Process Docs</span></div>
+        <div class="project-outcome">✓ Contributed to faster team onboarding</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Skills</span>
+      <h2 class="section-title">Tools &amp; competencies</h2>
+    </div>
+    <div class="skills-cols reveal-stagger">
+      <div class="skill-block">
+        <h4>Core Competencies</h4>
+        <div class="tag-cloud">
+          <span>Virtual Assistance</span><span>Data Entry</span><span>Document Mgmt</span><span>Calendar Mgmt</span><span>Quality Assurance</span><span>Time Management</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <h4>Office &amp; Platforms</h4>
+        <div class="tag-cloud">
+          <span>Microsoft Office</span><span>Google Workspace</span><span>Adobe Acrobat</span><span>Salesforce</span><span>Citrix</span><span>Zoom</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <h4>Industry Systems</h4>
+        <div class="tag-cloud">
+          <span>RealServicing</span><span>MSP</span><span>CRM</span><span>Asana</span><span>Trello</span><span>Canva</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Education</span>
+      <h2 class="section-title">Academic background</h2>
+    </div>
+    <div class="edu-card reveal">
+      <div>
+        <h3>Bachelor of Science in Information Technology</h3>
+        <span>Cavite State University</span>
+      </div>
+      <span>2010 — 2014</span>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Certifications</span>
+      <h2 class="section-title">Compliance credentials</h2>
+    </div>
+    <div class="cert-card reveal">
+      <div class="cert-main">
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1D9C7C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6l7-4z"></path><path d="M9 12l2 2 4-4"></path></svg>
+        </div>
+        <div>
+          <h3>HIPAA Compliance Training Program</h3>
+          <span class="cert-issuer">HIPAA Training US · Certificate ID: HIPAA-0025659</span>
+        </div>
+      </div>
+      <div class="cert-right">
+        <div class="cert-dates">
+          Issued Jan 13, 2026<br>Expires Jan 13, 2027
+        </div>
+        <span class="cert-status">Active</span>
+        <a class="cert-view" href="John_Rendell_Calarion_HIPAA_Certificate.pdf" target="_blank" rel="noopener">View Certificate</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Let's work together</h2>
+    <p>Available for remote virtual assistant and administrative support roles — insurance, mortgage, and data operations background, ready for new tools and industries.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:calarionjohnrendell35@gmail.com">Email Me</a>
+      <a class="btn btn-secondary" href="John_Rendell_Calarion_Resume.pdf" download>Download Résumé</a>
+    </div>
+    <div class="footer-contact">
+      <a href="mailto:calarionjohnrendell35@gmail.com">calarionjohnrendell35@gmail.com</a>
+      <a href="tel:+639399146506">+63 939 914 6506</a>
+      <span>Bacoor, Cavite, Philippines</span>
+    </div>
+    <div class="footer-bottom">© 2026 John Rendell Calarion. Built for recruiters, not robots.</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Accuracy ring trigger
+  const ringWrap = document.getElementById('ringWrap');
+  const ringObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        ringWrap.classList.add('in-view');
+        ringObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  if (ringWrap) ringObserver.observe(ringWrap);
+
+  // Smooth scroll with nav offset
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const navH = document.querySelector('.topnav').offsetHeight;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - navH + 1;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
